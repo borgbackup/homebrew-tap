@@ -1,3 +1,28 @@
+class OsxfuseRequirement < Requirement
+
+  fatal true
+
+  satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
+
+  def self.binary_osxfuse_installed?
+    File.exist?("/usr/local/include/osxfuse/fuse.h") &&
+      !File.symlink?("/usr/local/include/osxfuse")
+  end
+
+  env do
+    ENV.append_path "PKG_CONFIG_PATH", HOMEBREW_LIBRARY/"Homebrew/os/mac/pkgconfig/fuse"
+
+    unless HOMEBREW_PREFIX.to_s == "/usr/local"
+      ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
+      ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/osxfuse"
+    end
+  end
+
+  def message
+    "osxfuse is required to build borgbackup-llfuse. Please run `brew install --cask osxfuse` first."
+  end
+end
+
 class BorgbackupLlfuse < Formula
   include Language::Python::Virtualenv
 
@@ -14,7 +39,7 @@ class BorgbackupLlfuse < Formula
 
   conflicts_with "borgbackup", because: "borgbackup-llfuse is a patched version of borgbackup"
 
-  depends_on osxfuse: :build
+  depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
   depends_on "libb2"
   depends_on "lz4"
