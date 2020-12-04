@@ -2,7 +2,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: BorgBackup-FUSE test on macOS
+    name: Test Homebrew install
     runs-on: macos-latest
     timeout-minutes: 15
     strategy:
@@ -21,6 +21,7 @@ jobs:
       - name: Test formula
         working-directory: ./Formula
         run: |
-          # brew audit --strict borgbackup-fuse.rb
+          #brew audit --strict borgbackup-fuse.rb
+          brew install borgbackup-fuse.rb
           brew test borgbackup-fuse.rb
 

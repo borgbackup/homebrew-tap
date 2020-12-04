@@ -68,5 +68,12 @@ class BorgbackupFuse < Formula
     end
     assert_predicate testpath/"restore/test.pdf", :exist?
     assert_equal File.size(testpath/"restore/test.pdf"), File.size(testpath/"test.pdf")
+
+    # Test mount command
+    mkdir testpath/"mount" do
+      system "mkdir", "mnt"
+      system "#{bin}/borg", "mount", testpath/"test-repo::test-archive", "mnt"
+    end
+    assert_equal File.size(testpath/"mount/test.pdf"), File.size(testpath/"test.pdf")
   end
 end
