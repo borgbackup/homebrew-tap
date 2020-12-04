@@ -4,6 +4,9 @@ jobs:
   test:
     name: BorgBackup-FUSE test on macOS
     runs-on: macos-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
 
     steps:
       - name: Checkout
