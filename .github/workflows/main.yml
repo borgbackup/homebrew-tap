@@ -1,0 +1,19 @@
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: BorgBackup-FUSE test on macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install required macFUSE
+        run: brew install --cask osxfuse
+
+      - uses: mxschmitt/action-tmate@v3
+
+      - name: Test formula
+        run: brew test Formula/borgbackup-fuse.rb
+
