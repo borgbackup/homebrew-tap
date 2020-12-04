@@ -1,5 +1,4 @@
 class OsxfuseRequirement < Requirement
-
   fatal true
 
   satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
@@ -37,8 +36,6 @@ class BorgbackupFuse < Formula
     regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
-  conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
-
   depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
   depends_on "libb2"
@@ -46,6 +43,8 @@ class BorgbackupFuse < Formula
   depends_on "openssl@1.1"
   depends_on "python@3.9"
   depends_on "zstd"
+
+  conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
   resource "llfuse" do
     url "https://files.pythonhosted.org/packages/8f/73/d35aaf5f650250756b40c1e718ee6a2d552700729476dee24c9837608e1b/llfuse-1.3.8.tar.gz"
@@ -68,12 +67,5 @@ class BorgbackupFuse < Formula
     end
     assert_predicate testpath/"restore/test.pdf", :exist?
     assert_equal File.size(testpath/"restore/test.pdf"), File.size(testpath/"test.pdf")
-
-    # Test mount command
-    mkdir testpath/"mount" do
-      system "mkdir", "mnt"
-      system "#{bin}/borg", "mount", testpath/"test-repo::test-archive", "mnt"
-    end
-    assert_equal File.size(testpath/"mount/test.pdf"), File.size(testpath/"test.pdf")
   end
 end

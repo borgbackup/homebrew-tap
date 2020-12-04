@@ -4,24 +4,31 @@ jobs:
   test:
     name: Test Homebrew install
     runs-on: macos-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Install required macFUSE
+      - name: Install macFUSE
         run: brew install --cask osxfuse
 
-      - name: Debug
-        uses: mxschmitt/action-tmate@v3
+      # - name: Debug
+      #   uses: mxschmitt/action-tmate@v3
 
       - name: Test formula
         working-directory: ./Formula
         run: |
-          #brew audit --strict borgbackup-fuse.rb
+          # Currently not working on GH actions due to Ruby issue.
+          # brew audit --strict borgbackup-fuse.rb
           brew install borgbackup-fuse.rb
           brew test borgbackup-fuse.rb
+
+      - name: Test mount command
+        run: |
+          borg init -e none test-repo
+          borg create test-repo::1 Formula
+          mkdir mnt
+          borg mount test-repo::1 mnt
+          ls mnt/Formula
 
