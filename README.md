@@ -2,7 +2,7 @@
 
 ## Why install [Borg](https://www.borgbackup.org/) using this tap vs `brew install borgbackup`?
 
-The `borgbackup-llfuse` formula maintained in this tap depends on [osxfuse](https://formulae.brew.sh/cask/osxfuse) (aka FUSE for macOS) and [llfuse](https://github.com/python-llfuse/python-llfuse/) which are required to mount repositories or archives using `borg mount`.
+The `borgbackup-fuse` formula maintained in this tap depends on [osxfuse](https://formulae.brew.sh/cask/osxfuse) (aka FUSE for macOS) and [llfuse](https://github.com/python-llfuse/python-llfuse/) which are required to mount repositories or archives using `borg mount`.
 
 These dependencies have been [removed](https://github.com/Homebrew/homebrew-core/commit/8c2f17e3b653347ada86d353243e2d6b6cb10fda#diff-4a25217474a5eb61d0776ab4cabc43b42689bc7b3efaaed400f799631dcec71f) from Homebrew’s [borgbackup](https://formulae.brew.sh/formula/borgbackup) formula because [FUSE for macOS](https://osxfuse.github.io/) is no longer open source.
 
@@ -12,7 +12,7 @@ If one doesn’t plan on using `borg mount`, installing Borg using `brew install
 
 ```shell
 brew install --cask osxfuse
-brew install borgbackup/tap/borgbackup-llfuse
+brew install borgbackup/tap/borgbackup-fuse
 ```
 
 ## Documentation

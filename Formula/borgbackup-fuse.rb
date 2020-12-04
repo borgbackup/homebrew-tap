@@ -19,11 +19,11 @@ class OsxfuseRequirement < Requirement
   end
 
   def message
-    "osxfuse is required to build borgbackup-llfuse. Please run `brew install --cask osxfuse` first."
+    "osxfuse is required to build borgbackup-fuse. Please run `brew install --cask osxfuse` first."
   end
 end
 
-class BorgbackupLlfuse < Formula
+class BorgbackupFuse < Formula
   include Language::Python::Virtualenv
 
   desc "Deduplicating archiver with compression and authenticated encryption"
@@ -37,7 +37,7 @@ class BorgbackupLlfuse < Formula
     regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
-  conflicts_with "borgbackup", because: "borgbackup-llfuse is a patched version of borgbackup"
+  conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
   depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
