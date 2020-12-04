@@ -55,4 +55,18 @@ class BorgbackupFuse < Formula
   def install
     virtualenv_install_with_resources
   end
+
+  test do
+    # Create a repo and archive, then test extraction.
+    cp test_fixtures("test.pdf"), testpath
+    Dir.chdir(testpath) do
+      system "#{bin}/borg", "init", "-e", "none", "test-repo"
+      system "#{bin}/borg", "create", "--compression", "zstd", "test-repo::test-archive", "test.pdf"
+    end
+    mkdir testpath/"restore" do
+      system "#{bin}/borg", "extract", testpath/"test-repo::test-archive"
+    end
+    assert_predicate testpath/"restore/test.pdf", :exist?
+    assert_equal File.size(testpath/"restore/test.pdf"), File.size(testpath/"test.pdf")
+  end
 end

@@ -12,8 +12,12 @@ jobs:
       - name: Install required macFUSE
         run: brew install --cask osxfuse
 
-      - uses: mxschmitt/action-tmate@v3
+      - name: Debug
+        uses: mxschmitt/action-tmate@v3
 
       - name: Test formula
-        run: brew test Formula/borgbackup-fuse.rb
+        working-directory: ./Formula
+        run: |
+          # brew audit --strict borgbackup-fuse.rb
+          brew test borgbackup-fuse.rb
 
