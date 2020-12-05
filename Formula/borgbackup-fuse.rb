@@ -1,3 +1,5 @@
+require "digest"
+
 class OsxfuseRequirement < Requirement
   fatal true
 
@@ -66,6 +68,6 @@ class BorgbackupFuse < Formula
       system "#{bin}/borg", "extract", testpath/"test-repo::test-archive"
     end
     assert_predicate testpath/"restore/test.pdf", :exist?
-    assert_equal File.size(testpath/"restore/test.pdf"), File.size(testpath/"test.pdf")
+    assert_equal Digest::SHA256.file(testpath/"restore/test.pdf"), Digest::SHA256.file(testpath/"test.pdf")
   end
 end

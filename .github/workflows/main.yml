@@ -27,8 +27,8 @@ jobs:
       - name: Test mount command
         run: |
           borg init -e none test-repo
-          borg create test-repo::1 Formula
+          borg create test-repo::test-archive Formula
           mkdir mnt
-          borg mount test-repo::1 mnt
+          borg mount test-repo::test-archive mnt
           ls mnt/Formula
 
