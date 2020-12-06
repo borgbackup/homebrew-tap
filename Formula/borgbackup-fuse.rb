@@ -1,5 +1,6 @@
-class OsxfuseRequirement < Requirement
+require "digest"
 
+class OsxfuseRequirement < Requirement
   fatal true
 
   satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
@@ -37,8 +38,6 @@ class BorgbackupFuse < Formula
     regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
-  conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
-
   depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
   depends_on "libb2"
@@ -47,6 +46,8 @@ class BorgbackupFuse < Formula
   depends_on "python@3.9"
   depends_on "zstd"
 
+  conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
+
   resource "llfuse" do
     url "https://files.pythonhosted.org/packages/8f/73/d35aaf5f650250756b40c1e718ee6a2d552700729476dee24c9837608e1b/llfuse-1.3.8.tar.gz"
     sha256 "b9b573108a840fbaa5c8f037160cc541f21b8cbdc15c5c8a39d5ac8c1b6c4cbc"
@@ -54,5 +55,19 @@ class BorgbackupFuse < Formula
 
   def install
     virtualenv_install_with_resources
+  end
+
+  test do
+    # Create a repo and archive, then test extraction.
+    cp test_fixtures("test.pdf"), testpath
+    Dir.chdir(testpath) do
+      system "#{bin}/borg", "init", "-e", "none", "test-repo"
+      system "#{bin}/borg", "create", "--compression", "zstd", "test-repo::test-archive", "test.pdf"
+    end
+    mkdir testpath/"restore" do
+      system "#{bin}/borg", "extract", testpath/"test-repo::test-archive"
+    end
+    assert_predicate testpath/"restore/test.pdf", :exist?
+    assert_equal Digest::SHA256.file(testpath/"restore/test.pdf"), Digest::SHA256.file(testpath/"test.pdf")
   end
 end
