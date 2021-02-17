@@ -49,8 +49,8 @@ class BorgbackupFuse < Formula
   conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
   resource "llfuse" do
-    url "https://files.pythonhosted.org/packages/8f/73/d35aaf5f650250756b40c1e718ee6a2d552700729476dee24c9837608e1b/llfuse-1.3.8.tar.gz"
-    sha256 "b9b573108a840fbaa5c8f037160cc541f21b8cbdc15c5c8a39d5ac8c1b6c4cbc"
+    url "https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz"
+    sha256 "c29c79d96a5aeab51608cae12594a1bf83576d86232f97341c7f779d413a4ec9"
   end
 
   def install
