@@ -14,7 +14,6 @@ class BorgbackupFuse < Formula
     regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
-  depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
   depends_on "libb2"
   depends_on "lz4"
