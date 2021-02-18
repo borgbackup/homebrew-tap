@@ -4,7 +4,7 @@ jobs:
   test:
     name: Test Homebrew install
     runs-on: macos-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -19,8 +19,7 @@ jobs:
       - name: Test formula
         working-directory: ./Formula
         run: |
-          # Currently not working on GH actions due to Ruby issue.
-          # brew audit --strict borgbackup-fuse.rb
+          brew audit --strict borgbackup-fuse.rb
           brew install borgbackup-fuse.rb
           brew test borgbackup-fuse.rb
 
