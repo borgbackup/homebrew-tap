@@ -1,5 +1,29 @@
 require "digest"
 
+class OsxfuseRequirement < Requirement
+  fatal true
+
+  satisfy(build_env: false) { self.class.binary_osxfuse_installed? }
+
+  def self.binary_osxfuse_installed?
+    File.exist?("/usr/local/include/fuse/fuse.h") &&
+      !File.symlink?("/usr/local/include/fuse")
+  end
+
+  env do
+    ENV.append_path "PKG_CONFIG_PATH", "/usr/local/lib/pkgconfig"
+
+    unless HOMEBREW_PREFIX.to_s == "/usr/local"
+      ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
+      ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/fuse"
+    end
+  end
+
+  def message
+    "macfuse is required to build borgbackup-fuse. Please run `brew install --cask macfuse` first."
+  end
+end
+
 class BorgbackupFuse < Formula
   include Language::Python::Virtualenv
 
@@ -14,6 +38,7 @@ class BorgbackupFuse < Formula
     regex(%r{href=.*?/tag/v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
+  depends_on OsxfuseRequirement => :build
   depends_on "pkg-config" => :build
   depends_on "libb2"
   depends_on "lz4"
