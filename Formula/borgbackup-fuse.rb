@@ -11,7 +11,8 @@ class OsxfuseRequirement < Requirement
   end
 
   env do
-    ENV.append_path "PKG_CONFIG_PATH", "#{HOMEBREW_PREFIX}/lib/pkgconfig:#{HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
+    ENV.append_path "PKG_CONFIG_PATH",
+                    "#{HOMEBREW_PREFIX}/lib/pkgconfig:#{HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
     ENV.append_path "BORG_OPENSSL_PREFIX", "#{HOMEBREW_PREFIX}/opt/openssl@1.1/"
 
     unless HOMEBREW_PREFIX.to_s == "/usr/local"
