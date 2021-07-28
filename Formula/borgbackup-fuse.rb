@@ -56,6 +56,11 @@ class BorgbackupFuse < Formula
     sha256 "c29c79d96a5aeab51608cae12594a1bf83576d86232f97341c7f779d413a4ec9"
   end
 
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/df/86/aef78bab3afd461faecf9955a6501c4999933a48394e90f03cd512aad844/packaging-21.0.tar.gz"
+    sha256 "7dc96269f53a4ccec5c0670940a4281106dd0bb343f47b7471f779df49c2fbe7"
+  end
+
   def install
     virtualenv_install_with_resources
   end
