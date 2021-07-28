@@ -32,8 +32,8 @@ class BorgbackupFuse < Formula
 
   desc "Deduplicating archiver with compression and authenticated encryption"
   homepage "https://borgbackup.org/"
-  url "https://github.com/borgbackup/borg/releases/download/1.1.16/borgbackup-1.1.16.tar.gz"
-  sha256 "bc569224d6320483e508c36ff2a651d01bbd0aaebf32305e2683a696b9c32d50"
+  url "https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz"
+  sha256 "7ab924fc017b24929bedceba0dcce16d56f9868bf9b5050d2aae2eb080671674"
   license "BSD-3-Clause"
 
   livecheck do
@@ -54,6 +54,11 @@ class BorgbackupFuse < Formula
   resource "llfuse" do
     url "https://files.pythonhosted.org/packages/b1/d4/44443fbaac6d5b878da99e7c0948ee93c7934fa3b00e48c5363823b583d0/llfuse-1.4.1.tar.gz"
     sha256 "c29c79d96a5aeab51608cae12594a1bf83576d86232f97341c7f779d413a4ec9"
+  end
+
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/df/86/aef78bab3afd461faecf9955a6501c4999933a48394e90f03cd512aad844/packaging-21.0.tar.gz"
+    sha256 "7dc96269f53a4ccec5c0670940a4281106dd0bb343f47b7471f779df49c2fbe7"
   end
 
   def install
