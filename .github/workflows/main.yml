@@ -27,7 +27,8 @@ jobs:
         run: |
           borg init -e none test-repo
           borg create test-repo::test-archive Formula
-          mkdir mnt
-          borg mount test-repo::test-archive mnt
-          ls mnt/Formula
+          # Will timeout due to macOS security prompt
+          # mkdir mnt
+          # borg mount test-repo::test-archive mnt
+          # ls mnt/Formula
 
