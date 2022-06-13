@@ -8,12 +8,22 @@ These dependencies have been [removed](https://github.com/Homebrew/homebrew-core
 
 If one doesn’t plan on using `borg mount`, installing Borg using `brew install borgbackup` works just fine.
 
+
 ## How to install Borg using this tap?
 
 ```shell
 brew install --cask macfuse
 brew install borgbackup/tap/borgbackup-fuse
 ```
+
+
+## How to update to a new BorgBackup version?
+
+- Get new package URLs and SHAs from [PyPi](https://pypi.org/project/borgbackup/)
+- Lint `brew audit --strict Formula/borgbackup-fuse.rb`
+- Install `brew install Formula/borgbackup-fuse.rb`
+- Test `brew test Formula/borgbackup-fuse.rb`
+
 
 ## Documentation
 
