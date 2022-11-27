@@ -79,6 +79,11 @@ class BorgbackupFuse < Formula
     ENV["BORG_LIBZSTD_PREFIX"] = Formula["zstd"].prefix
     ENV["BORG_OPENSSL_PREFIX"] = Formula["openssl@1.1"].prefix
     virtualenv_install_with_resources
+
+    man1.install Dir["docs/man/*.1"]
+    bash_completion.install "scripts/shell_completions/bash/borg"
+    fish_completion.install "scripts/shell_completions/fish/borg.fish"
+    zsh_completion.install "scripts/shell_completions/zsh/_borg"
   end
 
   test do
