@@ -16,7 +16,7 @@ class OsxfuseRequirement < Requirement
                     "#{HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
     ENV.append_path "BORG_OPENSSL_PREFIX", "#{HOMEBREW_PREFIX}/opt/openssl@1.1/"
 
-    unless HOMEBREW_PREFIX.to_s == "/usr/local"
+    if HOMEBREW_PREFIX.to_s != "/usr/local"
       ENV.append_path "HOMEBREW_LIBRARY_PATHS", "/usr/local/lib"
       ENV.append_path "HOMEBREW_INCLUDE_PATHS", "/usr/local/include/fuse"
     end
@@ -32,8 +32,8 @@ class BorgbackupFuse < Formula
 
   desc "Deduplicating archiver with compression and authenticated encryption"
   homepage "https://borgbackup.org/"
-  url "https://files.pythonhosted.org/packages/6e/9e/e7a116401ef0c6c2766e4e49e5a3aafaa725ba0ea827305f016339c6c496/borgbackup-1.2.4.tar.gz"
-  sha256 "a4bd54e9469e81b7a30a6711423115abc818d9cd844ecb1ca0e6104bc5374da8"
+  url "https://files.pythonhosted.org/packages/cd/a2/d4375923a8b858312e6f4593ac7f613d338394f3feb669f67d2a6269d2f9/borgbackup-1.2.6.tar.gz"
+  sha256 "b7a6f8f086039eeec79070b914f3c651ed7f3612c965374af910d277c7a2139d"
   license "BSD-3-Clause"
 
   livecheck do
@@ -45,31 +45,27 @@ class BorgbackupFuse < Formula
   depends_on "pkg-config" => :build
   depends_on "libb2"
   depends_on "lz4"
-  depends_on "openssl@1.1"
-  depends_on "python@3.10"
+  depends_on "openssl@3"
+  depends_on "python-packaging"
+  depends_on "python@3.11"
   depends_on "xxhash"
   depends_on "zstd"
 
   conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
   resource "msgpack" do
-    url "https://files.pythonhosted.org/packages/22/44/0829b19ac243211d1d2bd759999aa92196c546518b0be91de9cacc98122a/msgpack-1.0.4.tar.gz"
-    sha256 "f5d869c18f030202eb412f08b28d2afeea553d6613aee89e200d7aca7ef01f5f"
-  end
-
-  resource "packaging" do
-    url "https://files.pythonhosted.org/packages/df/9e/d1a7217f69310c1db8fdf8ab396229f55a699ce34a203691794c5d1cad0c/packaging-21.3.tar.gz"
-    sha256 "dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"
+    url "https://files.pythonhosted.org/packages/dc/a1/eba11a0d4b764bc62966a565b470f8c6f38242723ba3057e9b5098678c30/msgpack-1.0.5.tar.gz"
+    sha256 "c075544284eadc5cddc70f4757331d99dcbc16b2bbd4849d15f8aae4cf36d31c"
   end
 
   resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/71/22/207523d16464c40a0310d2d4d8926daffa00ac1f5b1576170a32db749636/pyparsing-3.0.9.tar.gz"
-    sha256 "2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"
+    url "https://files.pythonhosted.org/packages/37/fe/65c989f70bd630b589adfbbcd6ed238af22319e90f059946c26b4835e44b/pyparsing-3.1.1.tar.gz"
+    sha256 "ede28a1a32462f5a9705e07aea48001a08f7cf81a021585011deba701581a0db"
   end
 
   resource "llfuse" do
-    url "https://files.pythonhosted.org/packages/23/98/896217af308e3deafae4f6370748d25fa500165f23d4586c3c993ff4e4ed/llfuse-1.4.2.tar.gz"
-    sha256 "ea4d19297be0ddbc5db68b421aa649c737a351f9c809919385a118c217c33083"
+    url "https://files.pythonhosted.org/packages/d2/2c/64f01042d1ed08725342c85ddb48a29d2a4f8712d27f22f66f28a67a079c/llfuse-1.5.0.tar.gz"
+    sha256 "d094448bb4eb20099537be53dc2b5b2c0369d36bde09207a9bb228cc3cd58ee1"
   end
 
   def install
@@ -77,7 +73,7 @@ class BorgbackupFuse < Formula
     ENV["BORG_LIBLZ4_PREFIX"] = Formula["lz4"].prefix
     ENV["BORG_LIBXXHASH_PREFIX"] = Formula["xxhash"].prefix
     ENV["BORG_LIBZSTD_PREFIX"] = Formula["zstd"].prefix
-    ENV["BORG_OPENSSL_PREFIX"] = Formula["openssl@1.1"].prefix
+    ENV["BORG_OPENSSL_PREFIX"] = Formula["openssl@3"].prefix
     virtualenv_install_with_resources
 
     man1.install Dir["docs/man/*.1"]
