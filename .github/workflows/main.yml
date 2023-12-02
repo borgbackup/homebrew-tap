@@ -19,9 +19,9 @@ jobs:
       - name: Test formula
         working-directory: ./Formula
         run: |
-          brew audit --strict borgbackup-fuse.rb
-          brew install borgbackup-fuse.rb
-          brew test borgbackup-fuse.rb
+          brew audit --strict borgbackup-fuse
+          brew install borgbackup-fuse
+          brew test borgbackup-fuse
 
       - name: Test mount command
         run: |
