@@ -19,10 +19,10 @@ brew install borgbackup/tap/borgbackup-fuse
 
 ## How to update to a new BorgBackup version?
 
-- Get new package URLs and SHAs from [PyPi](https://pypi.org/project/borgbackup/)
-- Lint `brew audit --strict Formula/borgbackup-fuse.rb`
-- Install `brew install Formula/borgbackup-fuse.rb`
-- Test `brew test Formula/borgbackup-fuse.rb`
+1. Get new package URLs and SHAs from [PyPi](https://pypi.org/project/borgbackup/)
+2. ~~Lint `brew audit --strict Formula/borgbackup-fuse.rb`~~
+3. Install `brew install Formula/borgbackup-fuse.rb`
+4. Test `brew test Formula/borgbackup-fuse.rb`
 
 
 ## Documentation
