@@ -46,26 +46,25 @@ class BorgbackupFuse < Formula
   depends_on "libb2"
   depends_on "lz4"
   depends_on "openssl@3"
-  depends_on "python-packaging"
-  depends_on "python@3.11"
+  depends_on "python@3.13"
   depends_on "xxhash"
   depends_on "zstd"
 
   conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
   resource "msgpack" do
-    url "https://files.pythonhosted.org/packages/08/4c/17adf86a8fbb02c144c7569dc4919483c01a2ac270307e2d59e1ce394087/msgpack-1.0.8.tar.gz"
-    sha256 "95c02b0e27e706e48d0e5426d1710ca78e0f0628d6e89d5b5a5b91a5f12274f3"
+    url "https://files.pythonhosted.org/packages/cb/d0/7555686ae7ff5731205df1012ede15dd9d927f6227ea151e901c7406af4f/msgpack-1.1.0.tar.gz"
+    sha256 "dd432ccc2c72b914e4cb77afce64aab761c1137cc698be3984eee260bcb2896e"
   end
 
-  resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/46/3a/31fd28064d016a2182584d579e033ec95b809d8e220e74c4af6f0f2e8842/pyparsing-3.1.2.tar.gz"
-    sha256 "a1bac0ce561155ecc3ed78ca94d3c9378656ad4c94c1270de543f621420f94ad"
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
+    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
   end
 
   resource "llfuse" do
-    url "https://files.pythonhosted.org/packages/d2/2c/64f01042d1ed08725342c85ddb48a29d2a4f8712d27f22f66f28a67a079c/llfuse-1.5.0.tar.gz"
-    sha256 "d094448bb4eb20099537be53dc2b5b2c0369d36bde09207a9bb228cc3cd58ee1"
+    url "https://files.pythonhosted.org/packages/be/a5/a3dc8426732f75ff2cdd48aaaa60a44afd56812760f49198c0d204768b1f/llfuse-1.5.1.tar.gz"
+    sha256 "7c9be52289cf647e3d735104531cc23a1a89fd1be3a621613a1cc0991f1b2699"
   end
 
   def install
@@ -74,6 +73,7 @@ class BorgbackupFuse < Formula
     ENV["BORG_LIBXXHASH_PREFIX"] = Formula["xxhash"].prefix
     ENV["BORG_LIBZSTD_PREFIX"] = Formula["zstd"].prefix
     ENV["BORG_OPENSSL_PREFIX"] = Formula["openssl@3"].prefix
+
     virtualenv_install_with_resources
 
     man1.install Dir["docs/man/*.1"]

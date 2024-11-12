@@ -1,34 +1,68 @@
-on: [push, pull_request]
+on:
+  # Allow manually triggering this workflow
+  workflow_dispatch:
+  # run for all pull requests and pushes to certain branches
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   test:
     name: Test Homebrew install
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - macos-13
+          - macos-14
     timeout-minutes: 15
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          test-bot: false
+
+      - name: Cache Homebrew Gems
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ matrix.os }}-rubygems-
+
+      - name: Install Homebrew Gems
+        id: gems
+        run: brew install-bundler-gems
+        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install macFUSE
         run: brew install --cask macfuse
 
-      # - name: Debug
-      #   uses: mxschmitt/action-tmate@v3
-
       - name: Test formula
-        working-directory: ./Formula
+        env:
+          HOMEBREW_NO_INSTALL_FROM_API: 1
         run: |
-          # brew audit --strict borgbackup-fuse.rb
-          brew install borgbackup-fuse.rb
-          brew test borgbackup-fuse.rb
+          brew install borgbackup-fuse
 
+          brew test borgbackup-fuse
+          brew style borgbackup-fuse
+          brew audit --online --strict borgbackup-fuse
+
+          brew uninstall borgbackup-fuse
+
+      # Step is disabled because it times out on GH hosted runners
+      # bacause of a macOS security prompt - can only be done on
+      # selfhosted runners
       - name: Test mount command
+        if: vars.TESTMOUNT
         run: |
           borg init -e none test-repo
           borg create test-repo::test-archive Formula
-          # Will timeout due to macOS security prompt
-          # mkdir mnt
-          # borg mount test-repo::test-archive mnt
-          # ls mnt/Formula
-
+          
+          mkdir mnt
+          borg mount test-repo::test-archive mnt
+          ls mnt/Formula
