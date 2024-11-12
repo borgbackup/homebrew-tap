@@ -39,9 +39,10 @@ jobs:
 
       - name: Test formula
         run: |
+          brew install borgbackup-fuse
+          
+          brew test borgbackup-fuse
           brew style borgbackup-fuse
           brew audit --online --strict borgbackup-fuse
 
-          brew install borgbackup-fuse
-          brew test borgbackup-fuse
           brew uninstall borgbackup-fuse
