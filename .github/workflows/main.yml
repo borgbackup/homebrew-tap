@@ -1,6 +1,10 @@
 on:
-  pull_request:
+  # Allow manually triggering this workflow
+  workflow_dispatch:
+  # run for all pull requests and pushes to certain branches
   push:
+    branches:
+      - master
 
 jobs:
   test:
@@ -42,7 +46,7 @@ jobs:
           HOMEBREW_NO_INSTALL_FROM_API: 1
         run: |
           brew install borgbackup-fuse
-          
+
           brew test borgbackup-fuse
           brew style borgbackup-fuse
           brew audit --online --strict borgbackup-fuse
