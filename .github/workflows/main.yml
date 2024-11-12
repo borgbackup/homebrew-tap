@@ -2,6 +2,7 @@ on:
   # Allow manually triggering this workflow
   workflow_dispatch:
   # run for all pull requests and pushes to certain branches
+  pull_request:
   push:
     branches:
       - master
@@ -52,3 +53,16 @@ jobs:
           brew audit --online --strict borgbackup-fuse
 
           brew uninstall borgbackup-fuse
+
+      # Step is disabled because it times out on GH hosted runners
+      # bacause of a macOS security promt - can only be done on
+      # selfhosted runners
+      - name: Test mount command
+        if: vars.TESTMOUNT
+        run: |
+          borg init -e none test-repo
+          borg create test-repo::test-archive Formula
+          
+          mkdir mnt
+          borg mount test-repo::test-archive mnt
+          ls mnt/Formula
