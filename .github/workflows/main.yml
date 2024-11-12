@@ -55,7 +55,7 @@ jobs:
           brew uninstall borgbackup-fuse
 
       # Step is disabled because it times out on GH hosted runners
-      # bacause of a macOS security promt - can only be done on
+      # bacause of a macOS security prompt - can only be done on
       # selfhosted runners
       - name: Test mount command
         if: vars.TESTMOUNT
