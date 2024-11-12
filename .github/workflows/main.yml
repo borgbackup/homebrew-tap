@@ -38,6 +38,8 @@ jobs:
         run: brew install --cask macfuse
 
       - name: Test formula
+        env:
+          HOMEBREW_NO_INSTALL_FROM_API: 1
         run: |
           brew install borgbackup-fuse
           
