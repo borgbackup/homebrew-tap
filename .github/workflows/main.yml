@@ -1,33 +1,47 @@
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
 
 jobs:
   test:
     name: Test Homebrew install
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - macos-13
+          - macos-14
     timeout-minutes: 15
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        with:
+          test-bot: false
+
+      - name: Cache Homebrew Gems
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ matrix.os }}-rubygems-
+
+      - name: Install Homebrew Gems
+        id: gems
+        run: brew install-bundler-gems
+        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install macFUSE
         run: brew install --cask macfuse
 
-      # - name: Debug
-      #   uses: mxschmitt/action-tmate@v3
-
       - name: Test formula
-        working-directory: ./Formula
         run: |
-          # brew audit --strict borgbackup-fuse.rb
-          brew install borgbackup-fuse.rb
-          brew test borgbackup-fuse.rb
+          brew style --cask borgbackup-fuse
+          brew audit --cask --online --strict borgbackup-fuse
 
-      - name: Test mount command
-        run: |
-          borg init -e none test-repo
-          borg create test-repo::test-archive Formula
-          # Will timeout due to macOS security prompt
-          # mkdir mnt
-          # borg mount test-repo::test-archive mnt
-          # ls mnt/Formula
+          brew install borgbackup-fuse
+          brew test borgbackup-fuse
+          brew uninstall borgbackup-fuse
