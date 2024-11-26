@@ -15,7 +15,9 @@ brew install --cask macfuse
 brew install borgbackup/tap/borgbackup-fuse
 ```
 
-## How to update to a new BorgBackup version?
+After that, borgbackup should upgrade automatically with homebrew when a new release is made.
+
+## For maintainers: How to make a new release?
 
 1. Get new package URLs and SHAs from [PyPi](https://pypi.org/project/borgbackup/)
 2. ~~Lint `brew audit --strict Formula/borgbackup-fuse.rb`~~
