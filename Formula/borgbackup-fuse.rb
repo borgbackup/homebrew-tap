@@ -92,7 +92,7 @@ class BorgbackupFuse < Formula
     mkdir testpath/"restore" do
       system "#{bin}/borg", "extract", testpath/"test-repo::test-archive"
     end
-    assert_predicate testpath/"restore/test.pdf", :exist?
+    assert_path_exists testpath/"restore/test.pdf"
     assert_equal Digest::SHA256.file(testpath/"restore/test.pdf"), Digest::SHA256.file(testpath/"test.pdf")
   end
 end
