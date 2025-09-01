@@ -1,6 +1,6 @@
 # BorgBackup [Homebrew](https://brew.sh/) tap
 
-## Why install [Borg](https://www.borgbackup.org/) using this tap vs `brew install borgbackup`?
+## Why install [Borg](https://www.borgbackup.org/) using this tap instead of `brew install borgbackup`?
 
 The `borgbackup-fuse` formula maintained in this tap depends on [macFUSE](https://osxfuse.github.io) and [llfuse](https://github.com/python-llfuse/python-llfuse/) which are required to mount repositories or archives using `borg mount`.
 
@@ -15,15 +15,15 @@ brew install --cask macfuse
 brew install borgbackup/tap/borgbackup-fuse
 ```
 
-After that, borgbackup should upgrade automatically with homebrew when a new release is made.
+After that, BorgBackup should upgrade automatically with Homebrew when a new release is made.
 
 ## For maintainers: How to make a new release?
 
-1. Get new package URLs and SHAs from [PyPi](https://pypi.org/project/borgbackup/)
+1. Get new package URLs and SHAs from [PyPI](https://pypi.org/project/borgbackup/)
 2. ~~Lint `brew audit --strict Formula/borgbackup-fuse.rb`~~
 3. Install `brew install Formula/borgbackup-fuse.rb`
 4. Test `brew test Formula/borgbackup-fuse.rb`
 
 ## Documentation
 
-`brew help`, `man brew` or check [Homebrew’s documentation](https://docs.brew.sh).
+Use `brew help`, `man brew`, or check [Homebrew’s documentation](https://docs.brew.sh).
