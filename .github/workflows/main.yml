@@ -2,7 +2,7 @@ on: [push, pull_request]
 
 jobs:
   test:
-    name: Test Homebrew install
+    name: Test Homebrew installation
     runs-on: macos-latest
     timeout-minutes: 15
 
@@ -23,7 +23,7 @@ jobs:
           brew install borgbackup-fuse.rb
           brew test borgbackup-fuse.rb
 
-      - name: Test mount command
+      - name: Test the mount command
         run: |
           borg init -e none test-repo
           borg create test-repo::test-archive Formula
