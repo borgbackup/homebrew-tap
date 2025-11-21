@@ -61,6 +61,10 @@ class BorgbackupFuse < Formula
     url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
     sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
   end
+  resource "llfuse" do
+    url "https://files.pythonhosted.org/packages/be/a5/a3dc8426732f75ff2cdd48aaaa60a44afd56812760f49198c0d204768b1f/llfuse-1.5.1.tar.gz"
+    sha256 "7c9be52289cf647e3d735104531cc23a1a89fd1be3a621613a1cc0991f1b2699"
+  end
 
   def install
     ENV["BORG_LIBB2_PREFIX"] = Formula["libb2"].prefix

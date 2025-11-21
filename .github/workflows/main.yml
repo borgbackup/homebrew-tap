@@ -15,8 +15,8 @@ jobs:
       fail-fast: true
       matrix:
         os:
-          - macos-13
           - macos-14
+          - macos-15
     timeout-minutes: 15
 
     steps:
@@ -62,7 +62,7 @@ jobs:
         run: |
           borg init -e none test-repo
           borg create test-repo::test-archive Formula
-          
+
           mkdir mnt
           borg mount test-repo::test-archive mnt
           ls mnt/Formula
