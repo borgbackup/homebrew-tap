@@ -46,7 +46,7 @@ class BorgbackupFuse < Formula
   depends_on "libb2"
   depends_on "lz4"
   depends_on "openssl@3"
-  depends_on "python@3.13"
+  depends_on "python@3.14"
   depends_on "xxhash"
   depends_on "zstd"
 
