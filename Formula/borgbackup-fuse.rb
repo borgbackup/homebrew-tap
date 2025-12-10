@@ -32,8 +32,8 @@ class BorgbackupFuse < Formula
 
   desc "Deduplicating archiver with compression and authenticated encryption"
   homepage "https://borgbackup.org/"
-  url "https://files.pythonhosted.org/packages/de/79/2031c715a35c1fc943cdac83337b0070737d29796270454bedf52d2ac457/borgbackup-1.4.2.tar.gz"
-  sha256 "8923f5e953205d81138d1d7276c8a1c864215e230994d620c397635568ed376f"
+  url "https://files.pythonhosted.org/packages/7a/5a/090ad33133d34d71aba70e40eff030aaa3a07776fa38cc8bd85eb856456b/borgbackup-1.4.3.tar.gz"
+  sha256 "79bbfa745d1901d685973584bd2d16a350686ddd176f6a2244490fb01996441f"
   license "BSD-3-Clause"
 
   livecheck do
@@ -52,6 +52,11 @@ class BorgbackupFuse < Formula
 
   conflicts_with "borgbackup", because: "borgbackup-fuse is a patched version of borgbackup"
 
+  resource "llfuse" do
+    url "https://files.pythonhosted.org/packages/be/a5/a3dc8426732f75ff2cdd48aaaa60a44afd56812760f49198c0d204768b1f/llfuse-1.5.1.tar.gz"
+    sha256 "7c9be52289cf647e3d735104531cc23a1a89fd1be3a621613a1cc0991f1b2699"
+  end
+
   resource "msgpack" do
     url "https://files.pythonhosted.org/packages/4d/f2/bfb55a6236ed8725a96b0aa3acbd0ec17588e6a2c3b62a93eb513ed8783f/msgpack-1.1.2.tar.gz"
     sha256 "3b60763c1373dd60f398488069bcdc703cd08a711477b5d480eecc9f9626f47e"
@@ -60,10 +65,6 @@ class BorgbackupFuse < Formula
   resource "packaging" do
     url "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz"
     sha256 "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
-  end
-  resource "llfuse" do
-    url "https://files.pythonhosted.org/packages/be/a5/a3dc8426732f75ff2cdd48aaaa60a44afd56812760f49198c0d204768b1f/llfuse-1.5.1.tar.gz"
-    sha256 "7c9be52289cf647e3d735104531cc23a1a89fd1be3a621613a1cc0991f1b2699"
   end
 
   def install
